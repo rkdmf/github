@@ -1,0 +1,117 @@
+class TNode:
+    def __init__(self, data, left, right):
+        self.data = data
+        self.left = left
+        self.right = right
+
+    #이진트리의 전위순회
+def preorder(n) :
+    if n is not None :
+        print(n.data, end=' ')
+        preorder(n.left)
+        preorder(n.right)
+
+    #이진트리의 중위순회
+def inorder(n) :
+    if n is not None :
+        inorder(n.left)
+        print(n.data, end=' ')
+        inorder(n.right)
+
+    #이진트리의 후위순회
+def postorder(n) :
+    if n is not None :
+        postorder(n.left)
+        postorder(n.right)
+        print(n.data, end=' ')
+
+    #이진트리의 레벨순회
+from CircularQueue import CircularQueue
+
+def levelorder(root) :
+    queue = CircularQueue()
+    queue.enqueue(root)
+    while not queue.isEmpty() :
+        n = queue.dequeue()
+        if n is not None :
+            print(n.data, end=' ')
+            queue.enqueue(n.left)
+            queue.enqueue(n.right)
+    #이진트리의 노드 수 계산
+def count_node(n) :
+    if n is None : 
+        return 0
+    else : 
+        return 1 + count_node(n.left) + count_node(n.right)
+
+    #이진트리의 단말노드 수 계산      
+def count_leaf(n) :
+    if n is None :
+        return 0
+    elif n.left is None and n.right is None:
+        return 1
+    else :
+        return count_leaf(n.left) + count_leaf(n.right)
+
+
+    #이진트리의 트리의 높이 계산
+def calc_height(n) :
+    if n is None : return 0
+    hLeft = calc_height(n.left)
+    hRight = calc_height(n.right)
+    if (hLeft > hRight) : return hLeft + 1
+    else: return hRight + 1           
+
+
+# 첫번쨰 트리 실행 
+g = TNode('G', None, None)
+h = TNode('H', None, None)
+e = TNode('E', g, h)
+f = TNode('F', None, None)
+c = TNode('C', e, f)
+d = TNode('D', None, None)
+b = TNode('B', d, None)
+root1 = TNode('A', b, c)
+
+print("--- 첫번쨰 트리 실행내용 ---")
+print('\n   In-Order : ', end='')
+inorder(root1)
+print('\n  Pre-Order : ', end='')
+preorder(root1)
+print('\n Post-Order : ', end='')
+postorder(root1)
+print('\nLevel-Order : ', end='')
+levelorder(root1)
+print()
+
+print(" 노드의 개수 = %d개" % count_node(root1))
+print(" 단말노드의 개수 = %d개" % count_leaf(root1))
+print(" 트리의 높이 = %d개" % calc_height(root1))
+print()
+
+
+#두번째 트리 실행
+a = TNode('A', None, None)
+b = TNode('B', None, None)
+f = TNode('/', a, b)
+c = TNode('C', None, None)
+g = TNode('*', f, c)
+d = TNode('D', None, None)
+h = TNode('*', g, d)
+e = TNode('E', None, None)
+root2 = TNode('+', h, e)
+
+print("--- 두번쨰 트리 실행내용 ---")
+print('\n   In-Order : ', end='')
+inorder(root2)
+print('\n  Pre-Order : ', end='')
+preorder(root2)
+print('\n Post-Order : ', end='')
+postorder(root2)
+print('\nLevel-Order : ', end='')
+levelorder(root2)
+print()
+
+print(" 노드의 개수 = %d개" % count_node(root2))
+print(" 단말노드의 개수 = %d개" % count_leaf(root2))
+print(" 트리의 높이 = %d개" % calc_height(root2))
